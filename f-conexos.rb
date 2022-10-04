@@ -34,7 +34,6 @@ def componentes_f_conexos
     grafo.addAresta(g,f)
     grafo.addAresta(g,h)
     grafo.addAresta(h,h)
-    
 =begin
     puts "Grafo de tamanho: #{grafo.size}"
     puts "Exibindo o vértice C"
@@ -57,9 +56,6 @@ def componentes_f_conexos
 =end
 
     grafo.print_cfc
-   
-
-    
 
 end
 
@@ -90,7 +86,7 @@ def caso_teorico
     grafo.addAresta(w,z)
     grafo.addAresta(z,z)
 
-
+=begin
     puts "Grafo de #{grafo.size} vertices!"
     puts "Exibindo o vertice U:"
     grafo.getVertice("u").printV
@@ -109,7 +105,8 @@ def caso_teorico
     puts "Transposta gt"
     gt = grafo.getTranspose
     gt.printG
-
+=end
+    grafo.print_cfc
 
 end
 
@@ -138,7 +135,7 @@ def fluxo_atendimento
     grafo.addAresta(consultorio1,sala_cirurgia)
     grafo.addAresta(sala_cirurgia,sala_repouso)
 
-    
+=begin
     puts "----------x----------x---------"
     puts "Grafo de #{grafo.size} vertices!"
     puts "Exibindo o vertice 'recepção':"
@@ -150,6 +147,8 @@ def fluxo_atendimento
     grafo.dfs
     puts "Exibindo o vertice qualquer após o DFS: "
     grafo.getVertice("sala cirurgia").printV
+=end
+    grafo.print_cfc
 end
 
 def situacao_atendimento

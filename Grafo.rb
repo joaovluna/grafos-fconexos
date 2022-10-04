@@ -1,4 +1,5 @@
 require './dfs/vertice.rb'
+
 class Grafo
     attr_accessor :vertices, :tempo
     def initialize 
@@ -64,7 +65,7 @@ class Grafo
         u.cor = Color.black
         @tempo += 1
         u.f = @tempo
-        @stack.push(u) #adicionando na stack conforme tempo de fechamentop -> LIFO
+        @stack.push(u) #adicionando na stack conforme tempo de fechamento -> LIFO
     end
     
     def printG
@@ -87,30 +88,28 @@ class Grafo
         end
 
         @vertices.each do |v|
-            vertex = Vertice.new v.nome
             v.vizinhos.each do |u|
-                vizin = Vertice.new u.nome
-                gt.addAresta(vizin,vertex)
+                gt.addAresta(gt.getVertice(u.nome),gt.getVertice(v.nome))
             end
         end
         return gt
     end
 
-#mostrar
+
     def print_cfc
         puts "Grafo"
         self.printG
-        self.dfs
-
+        self.dfs    #1 DFS no Grafo Original
+        
         puts
         puts "Transposta:"
-        gt = self.transposta
+        gt = self.transposta    #Transposta do Grafo 
         gt.printG
         puts 
         print "Pilha: "
 
         @stack.each do |s|
-            print "#{s.nome} "
+            print "#{s.nome} " #Pilha decrescente por ordem de fechamento
         end
 
         puts
@@ -118,38 +117,34 @@ class Grafo
         puts "Componentes Fortemente Conexos"
         z = 0
 
-        while !@stack.empty? 
+        while !@stack.empty?
+
             v = @stack.pop 
             vt = gt.getVertice(v.nome)
-    
+
             if vt.cor == Color.white
                 z+=1
                 print "Grupo #{z}: "
-                gt.dfs_t(vt)
+                gt.dfs_t(vt)    #DFS Gt, considerando os vértices em ordem decrescente [de acordo com a pilha]
                 puts
             end
-
+                      
         end
     end
 
     def dfs_t(vt)
         #puts "DENTRO DO DFS"  
-           
         vt.cor = Color.grey
+        
         print "#{vt.nome} "
+
         vt.vizinhos.each do |v|
-            #print " #{v.nome} -> #{v.cor} |"
+           # print " #{v.nome} -> #{v.cor} |"
             if v.cor == Color.white
                 v.pi = vt.nome
                 dfs_t(v)
             end
-            
-
         end
-    
     end
-
-
-    
 
 end
