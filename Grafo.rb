@@ -101,7 +101,7 @@ class Grafo
         puts "Grafo"
         self.printG
         self.dfs
-        
+
         puts
         puts "Transposta:"
         gt = self.transposta
@@ -139,7 +139,6 @@ class Grafo
         print "#{vt.nome} "
         vt.vizinhos.each do |v|
             #print " #{v.nome} -> #{v.cor} |"
-            
             if v.cor == Color.white
                 v.pi = vt.nome
                 dfs_t(v)
