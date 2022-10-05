@@ -2,10 +2,13 @@ require './dfs/vertice.rb'
 
 class Grafo
     attr_accessor :vertices, :tempo
+
+    @@stack = Array.new #pilha de fechamento
+    @@componentes = []
+
     def initialize 
         @vertices = Array.new #lista de adjacencia
         @tempo = 0
-        @stack = Array.new #pilha de fechamento
     end
     
     def addVertice(vertice)
@@ -65,7 +68,7 @@ class Grafo
         u.cor = Color.black
         @tempo += 1
         u.f = @tempo
-        @stack.push(u) #adicionando na stack conforme tempo de fechamento -> LIFO
+       @@stack.push(u) #adicionando na stack conforme tempo de fechamento -> LIFO
     end
     
     def printG
@@ -104,47 +107,87 @@ class Grafo
         puts
         puts "Transposta:"
         gt = self.transposta    #Transposta do Grafo 
-        gt.printG
+        gt.printG   
         puts 
-        print "Pilha: "
 
-        @stack.each do |s|
+        print "Pilha: "
+        @@stack.each do |s|
             print "#{s.nome} " #Pilha decrescente por ordem de fechamento
         end
 
-        puts
-        puts
-        puts "Componentes Fortemente Conexos"
         z = 0
+        
+        while !@@stack.empty?
 
-        while !@stack.empty?
-
-            v = @stack.pop 
+            v = @@stack.pop 
             vt = gt.getVertice(v.nome)
 
             if vt.cor == Color.white
-                z+=1
-                print "Grupo #{z}: "
-                gt.dfs_t(vt)    #DFS Gt, considerando os vértices em ordem decrescente [de acordo com a pilha]
-                puts
+                
+                #print "Grupo #{z}: "
+                @@componentes[z] = []
+                gt.dfs_t(vt,z)    #DFS Gt, considerando os vértices em ordem decrescente [de acordo com a pilha]
+                z += 1
             end
                       
         end
+        puts puts
+        self.printComponentes
+
     end
 
-    def dfs_t(vt)
+    def dfs_t(vt,z)
         #puts "DENTRO DO DFS"  
+
         vt.cor = Color.grey
-        
-        print "#{vt.nome} "
+        @@componentes[z].push(vt)
+        #print "#{vt.nome} "
 
         vt.vizinhos.each do |v|
            # print " #{v.nome} -> #{v.cor} |"
             if v.cor == Color.white
                 v.pi = vt.nome
-                dfs_t(v)
+                dfs_t(v,z)
             end
         end
     end
+
+    def printComponentes
+        puts "Componentes Fortemente Conectados"
+        @@componentes.each do |comp|
+            print "Componente #{@@componentes.index(comp)}: "
+            comp.each do |c|
+                print "#{c.nome} "
+            end
+            puts
+        end
+    end
+
+    def recomendacao(nomeVertice)
+        posicao = 0
+        vertice = self.getVertice(nomeVertice)
+        puts "Recomendação para vertice -> #{vertice.nome.upcase}"
+
+        @@componentes.each do |comp|
+            #puts "1"
+            comp.each do |c|
+                #puts "2"
+                if c.nome == vertice.nome
+                    posicao = @@componentes.index(comp) 
+                end
+            end
+        end
+        #puts posicao
+        
+        @@componentes[posicao].each do |vc|
+            #puts vc.nome
+            if !vertice.isVizinho?(vc) and vc.nome != vertice.nome
+                puts "Para #{vertice.nome.upcase} recomendo #{vc.nome.upcase}" 
+            end
+
+        end
+
+    end
+
 
 end

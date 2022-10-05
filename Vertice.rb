@@ -1,11 +1,23 @@
+class Color
+    private
+        def self.white
+            "WHITE"
+        end
+        def self.grey
+            "GREY"
+        end
+        def self.black
+            "BLACK"
+        end
+end
+
 class Vertice 
     attr_accessor :nome,:vizinhos, :cor, :pi , :d, :f
     def initialize nome
         @nome = nome
-        #criando array vazio
         @vizinhos = Array.new 
         @cor = Color.white
-
+        
     end
     def addVizinho(vizinho)
         @vizinhos.push(vizinho)
@@ -26,17 +38,16 @@ class Vertice
             puts "---------------"
         end
     end
-end
 
-class Color
-    private
-        def self.white
-            "WHITE"
+    def isVizinho?(vizinho)
+        flag = false
+        @vizinhos.each do |v|
+
+            if v.nome == vizinho.nome
+                flag = true
+                break
+            end
         end
-        def self.grey
-            "GREY"
-        end
-        def self.black
-            "BLACK"
-        end
+        return flag
+    end
 end

@@ -1,5 +1,6 @@
 require './dfs/grafo.rb'
 require './dfs/vertice.rb'
+
 def componentes_f_conexos
     grafo = Grafo.new
     a = Vertice.new "a"
@@ -56,7 +57,10 @@ def componentes_f_conexos
 =end
 
     grafo.print_cfc
+    puts puts
+    grafo.recomendacao("a")
 
+    
 end
 
 def caso_teorico
@@ -110,82 +114,40 @@ def caso_teorico
 
 end
 
-def fluxo_atendimento
+def componentes_f_conexos
     grafo = Grafo.new
-    recepcao = Vertice.new "recepcao"
-    banheiro = Vertice.new "banheiro"
-    consultorio1 = Vertice.new "consultorio1"
-    consultorio2 = Vertice.new "consultorio2"
-    sala_cirurgia = Vertice.new "sala cirurgia"
-    sala_repouso = Vertice.new "sala repouso"
+    a = Vertice.new "a"
+    b = Vertice.new "b"
+    c = Vertice.new "c"
+    d = Vertice.new "d"
+    e = Vertice.new "e"
+    f = Vertice.new "f"
+    g = Vertice.new "g"
+    
 
-    grafo.addVertice(recepcao)
-    grafo.addVertice(banheiro)
-    grafo.addVertice(consultorio1)
-    grafo.addVertice(consultorio2)
-    grafo.addVertice(sala_cirurgia)
-    grafo.addVertice(sala_repouso)
+    grafo.addVertice(a)
+    grafo.addVertice(b)
+    grafo.addVertice(c)
+    grafo.addVertice(d)
+    grafo.addVertice(e)
+    grafo.addVertice(f)
+    grafo.addVertice(g)
 
-    grafo.addAresta(recepcao, consultorio1)
-    grafo.addAresta(recepcao, consultorio2)
-    grafo.addAresta(recepcao, banheiro)
-    grafo.addAresta(banheiro, recepcao)
-    grafo.addAresta(consultorio2,banheiro)
-    grafo.addAresta(consultorio1,banheiro)
-    grafo.addAresta(consultorio1,sala_cirurgia)
-    grafo.addAresta(sala_cirurgia,sala_repouso)
+    grafo.addAresta(a,b)
+    grafo.addAresta(b,e)
+    grafo.addAresta(b,c)
+    grafo.addAresta(c,a)
+    grafo.addAresta(c,d)
+    grafo.addAresta(d,b)
+    grafo.addAresta(e,f)
+    grafo.addAresta(f,g)
+    grafo.addAresta(g,e)
 
-=begin
-    puts "----------x----------x---------"
-    puts "Grafo de #{grafo.size} vertices!"
-    puts "Exibindo o vertice 'recepção':"
-    grafo.getVertice("recepcao").printV
-    puts "Exibindo os vizinhos de 'recepcao':"
-    grafo.getVertice("recepcao").printVizinhos
-
-    puts "<--------- Usando DFS --------->"
-    grafo.dfs
-    puts "Exibindo o vertice qualquer após o DFS: "
-    grafo.getVertice("sala cirurgia").printV
-=end
     grafo.print_cfc
-end
 
-def situacao_atendimento
-    grafo = Grafo.new
-    avaliar = Vertice.new "avaliar"
-    coriza = Vertice.new "coriza"
-    colica = Vertice.new "colica"
-    gripe = Vertice.new "gripe"
-    covid = Vertice.new "covid"
-    gravidez = Vertice.new "gravidez"
-    gases = Vertice.new "gases"
-
-    grafo.addVertice(avaliar)
-    grafo.addVertice(coriza)
-    grafo.addVertice(colica)
-    grafo.addVertice(gripe)
-    grafo.addVertice(covid)
-    grafo.addVertice(gravidez)
-    grafo.addVertice(gases)
-
-    grafo.addAresta(avaliar,coriza)
-    grafo.addAresta(avaliar,colica)
-    grafo.addAresta(coriza,gripe)
-    grafo.addAresta(coriza,covid)
-    grafo.addAresta(colica,gravidez)
-    grafo.addAresta(colica,gases)
-
-    puts "Perguntas para coriza"
-    grafo.getVertice("coriza").printVizinhos
-    puts "<--------- Usando DFS --------->"
-    grafo.dfs
-    puts "Exibindo o vertice qualquer após o DFS: "
-    grafo.getVertice("colica").printV
+    grafo.recomendacao("a")
 end
 
 
 componentes_f_conexos
 #caso_teorico
-#fluxo_atendimento
-#situacao_atendimento
