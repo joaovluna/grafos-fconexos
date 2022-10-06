@@ -4,7 +4,7 @@ class Grafo
     attr_accessor :vertices, :tempo
 
     @@stack = Array.new #pilha de fechamento
-    @@componentes = []
+    @@componentes = []  #lista de componentes
 
     def initialize 
         @vertices = Array.new #lista de adjacencia
@@ -51,14 +51,7 @@ class Grafo
         @tempo += 1
         u.d = @tempo
         u.vizinhos.each do |v|
-            #EXTRA (PROCURANDO CICLO)
-=begin
-            if v.cor == Color.grey
-                puts "Encontrado uma aresta de retorno no DFS"
-                puts "[#{u.nome}] -> [#{v.nome}]"
-                puts "Ciclo encontrado!"
-            end
-=end
+ 
             if v.cor == Color.white
                 v.pi = u.nome
                 dfs_visit(v)
@@ -68,7 +61,8 @@ class Grafo
         u.cor = Color.black
         @tempo += 1
         u.f = @tempo
-       @@stack.push(u) #adicionando na stack conforme tempo de fechamento -> LIFO
+       @@stack.push(u) 
+       #adicionando na pilha conforme tempo de fechamento -> LIFO
     end
     
     def printG
@@ -106,25 +100,24 @@ class Grafo
         
         puts
         puts "Transposta:"
-        gt = self.transposta    #Transposta do Grafo 
+        gt = self.transposta    #2 Transposta do Grafo 
         gt.printG   
         puts 
 
         print "Pilha: "
         @@stack.each do |s|
-            print "#{s.nome} " #Pilha decrescente por ordem de fechamento
+            print "#{s.nome} " #Apresentação Pilha 
         end
 
         z = 0
         
-        while !@@stack.empty?
+        while !@@stack.empty? #considerando ordem decrescente por fechamento
 
-            v = @@stack.pop 
+            v = @@stack.pop #3
             vt = gt.getVertice(v.nome)
 
             if vt.cor == Color.white
                 
-                #print "Grupo #{z}: "
                 @@componentes[z] = []
                 gt.dfs_t(vt,z)    #DFS Gt, considerando os vértices em ordem decrescente [de acordo com a pilha]
                 z += 1
@@ -137,14 +130,14 @@ class Grafo
     end
 
     def dfs_t(vt,z)
-        #puts "DENTRO DO DFS"  
+        
 
         vt.cor = Color.grey
-        @@componentes[z].push(vt)
-        #print "#{vt.nome} "
+        @@componentes[z].append(vt)
+       
 
         vt.vizinhos.each do |v|
-           # print " #{v.nome} -> #{v.cor} |"
+          
             if v.cor == Color.white
                 v.pi = vt.nome
                 dfs_t(v,z)
@@ -169,18 +162,18 @@ class Grafo
         puts "Recomendação para vertice -> #{vertice.nome.upcase}"
 
         @@componentes.each do |comp|
-            #puts "1"
+            
             comp.each do |c|
-                #puts "2"
+                
                 if c.nome == vertice.nome
                     posicao = @@componentes.index(comp) 
                 end
             end
         end
-        #puts posicao
+        
         
         @@componentes[posicao].each do |vc|
-            #puts vc.nome
+            
             if !vertice.isVizinho?(vc) and vc.nome != vertice.nome
                 puts "Para #{vertice.nome.upcase} recomendo #{vc.nome.upcase}" 
             end

@@ -1,7 +1,8 @@
 require './dfs/grafo.rb'
 require './dfs/vertice.rb'
 
-def componentes_f_conexos
+def exercicio
+
     grafo = Grafo.new
     a = Vertice.new "a"
     b = Vertice.new "b"
@@ -43,37 +44,6 @@ def componentes_f_conexos
     
 end
 
-def caso_teorico
-    
-    grafo = Grafo.new
-
-    u = Vertice.new "u"
-    v = Vertice.new "v"
-    w = Vertice.new "w"
-    x = Vertice.new "x"
-    y = Vertice.new "y"
-    z = Vertice.new "z"
-
-    grafo.addVertice(u)
-    grafo.addVertice(v)
-    grafo.addVertice(w)
-    grafo.addVertice(x)
-    grafo.addVertice(y)
-    grafo.addVertice(z)
-    
-    grafo.addAresta(u,v)
-    grafo.addAresta(u,x)
-    grafo.addAresta(v,y)
-    grafo.addAresta(y,x)
-    grafo.addAresta(x,v)
-    grafo.addAresta(w,y)
-    grafo.addAresta(w,z)
-    grafo.addAresta(z,z)
-
-    grafo.print_cfc
-
-end
-
 def teste
     grafo = Grafo.new
     a = Vertice.new "a"
@@ -105,9 +75,9 @@ def teste
 
     grafo.print_cfc
 
-    grafo.recomendacao("a")
+    grafo.recomendacao("d")
 end
 
-teste
-#componentes_f_conexos
-#caso_teorico
+#teste
+
+exercicio

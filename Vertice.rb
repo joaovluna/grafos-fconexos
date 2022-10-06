@@ -48,6 +48,7 @@ class Vertice
                 break
             end
         end
+        
         return flag
     end
 end
