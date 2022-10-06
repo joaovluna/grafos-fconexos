@@ -1,8 +1,7 @@
 require_relative 'vertice'
 require_relative 'grafo'
 
-def exercicio
-
+def teste
     grafo = Grafo.new
     a = Vertice.new "a"
     b = Vertice.new "b"
@@ -11,7 +10,7 @@ def exercicio
     e = Vertice.new "e"
     f = Vertice.new "f"
     g = Vertice.new "g"
-    h = Vertice.new "h"
+    
 
     grafo.addVertice(a)
     grafo.addVertice(b)
@@ -20,32 +19,22 @@ def exercicio
     grafo.addVertice(e)
     grafo.addVertice(f)
     grafo.addVertice(g)
-    grafo.addVertice(h)
 
     grafo.addAresta(a,b)
-    grafo.addAresta(b,c)
-    grafo.addAresta(b,f)
     grafo.addAresta(b,e)
+    grafo.addAresta(b,c)
+    grafo.addAresta(c,a)
     grafo.addAresta(c,d)
-    grafo.addAresta(c,g)
-    grafo.addAresta(d,h)
-    grafo.addAresta(d,c)
-    grafo.addAresta(e,a)
+    grafo.addAresta(d,b)
     grafo.addAresta(e,f)
     grafo.addAresta(f,g)
-    grafo.addAresta(g,f)
-    grafo.addAresta(g,h)
-    grafo.addAresta(h,h)
+    grafo.addAresta(g,e)
 
     grafo.print_cfc
-    
+
     puts "Qual vértice você deseja visualizar as recomendações?"
     input = gets.chomp 
     grafo.recomendacao(input)
-
-    
 end
 
-
-
-exercicio
+teste

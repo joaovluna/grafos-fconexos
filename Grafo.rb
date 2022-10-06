@@ -1,4 +1,4 @@
-require './dfs/vertice.rb'
+require_relative 'vertice'
 
 class Grafo
     attr_accessor :vertices, :tempo
